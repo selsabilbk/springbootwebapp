@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dev-server
+  namespace: jenkins
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dev-server
+    spec:
+      containers:
+      - name: dev-server
+        image: nexus-docker.minikube/i.b.vermeg:springapp
+        ports:
+        - name: http-port
+          containerPort: 8080
+          protocol: TCP
+      imagePullSecrets:
+      - name: $KUBERNETES_SECRET_NAME
